@@ -72,13 +72,13 @@ def login(username, password):
 <html>
 <head><title>Brilliant Proctored Access Codes</title>
 <style>
-table, th, td\{
+table, th, td{{
   border:1px solid black;
   text-align: center;
   border-collapse: collapse;
   margin-left: auto;
   margin-right: auto;
-}
+}}
 </style>
 </head>
 <body align="center">
