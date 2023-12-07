@@ -56,13 +56,13 @@ def login(username, password):
             headers=HEADERS,
         )
         print("Logged in.")
-        i = 1800
+        i = 1000
         p =[]
-        while i < 1800:
+        while i < 10000:
             k = copy.deepcopy(i)
             h = threading.Thread(target=code, args=(k,), daemon=True)
             p.append(h)
-            if len(p) >= 3:
+            if len(p) >= 5:
                 time.sleep(0.5)
                 p =[]
             h.start()
