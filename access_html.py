@@ -61,7 +61,7 @@ def login(username, password):
             k = copy.deepcopy(i)
             h = threading.Thread(target=code, args=(k,), daemon=True)
             p.append(h)
-            if len(p) >= 10:
+            if len(p) >= 20:
                 time.sleep(2)
                 p =[]
             h.start()
@@ -101,6 +101,7 @@ Made by <a href="https://github.com/Alpha62579/">Robin.</a> on Samsung SM-T220, 
         print("Process complete with", count, "codes found.")
 
 def code(k):
+    print("trying", k)
     global count
     try:
         res = r.get(
