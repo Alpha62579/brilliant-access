@@ -38,7 +38,7 @@ jobs:
       - name: Install Dependancies      
         run: |
           sudo apt update
-          sudo apt install -y python_openssl
+          sudo apt install -y openssl
           pip install bs4 requests    
       - name: Build page
         run: python access_html.py ${{ secrets.PARAMS }}
