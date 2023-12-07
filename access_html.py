@@ -62,8 +62,8 @@ def login(username, password):
             k = copy.deepcopy(i)
             h = threading.Thread(target=code, args=(k,), daemon=True)
             p.append(h)
-            if len(p) >= 5:
-                time.sleep(0.5)
+            if len(p) >= 1:
+                time.sleep(0.1)
                 p =[]
             h.start()
             i += 1
