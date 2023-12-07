@@ -67,11 +67,12 @@ def login(username, password):
             h.start()
             i += 1
         f = open("index.html","w+")
-        f.write("""
+        formatted = '\n'.join([f"<tr><td>{code}</td><td>{title}</td></tr>" for code,title in results])
+        f.write(f"""
 <html>
 <head><title>Brilliant Proctored Access Codes</title>
 <style>
-table, th, td{
+table, th, td\{
   border:1px solid black;
   text-align: center;
   border-collapse: collapse;
@@ -88,14 +89,14 @@ These are all valid access codes to exams which may or may not have started or e
 <tr>
 <th>Code</th><th>Exam</th>
 </tr>
-{}
+{formatted}
 </table>
 <hr>
 <footer>
 Made by <a href="https://github.com/Alpha62579/">Robin.</a> on Samsung SM-T220, Brilliant's "locked" study tablet.
 </footer>
 </body>
-</html>""".format('\n'.join([f"<tr><td>{code}</td><td>{title}</td></tr>" for code,title in results])))
+</html>""")
         f.close()
         print("Process complete with", count, "codes found.")
 
