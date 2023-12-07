@@ -1,5 +1,6 @@
 import sys
 import requests as r
+import traceback
 import threading
 from bs4 import BeautifulSoup as bs
 import copy
@@ -101,7 +102,6 @@ Made by <a href="https://github.com/Alpha62579/">Robin.</a> on Samsung SM-T220, 
         print("Process complete with", count, "codes found.")
 
 def code(k):
-    print("trying", k)
     global count
     try:
         res = r.get(
@@ -112,7 +112,7 @@ def code(k):
             results.append((k,res.json()['results'][0]['title']))
             count += 1
             print(k, "yay code")
-    except Exception:
-        pass
+    except Exception as e:
+        print(traceback.format_exc())
 
 login(sys.argv[1],sys.argv[2])
