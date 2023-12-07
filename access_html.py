@@ -1,7 +1,6 @@
 import sys
 import requests as r
 import traceback
-import threading
 from bs4 import BeautifulSoup as bs
 import copy
 import time
@@ -57,15 +56,8 @@ def login(username, password):
         )
         print("Logged in.")
         i = 1000
-        p =[]
         while i < 10000:
-            k = copy.deepcopy(i)
-            h = threading.Thread(target=code, args=(k,), daemon=True)
-            p.append(h)
-            if len(p) >= 1:
-                time.sleep(0.1)
-                p =[]
-            h.start()
+            code(i)
             i += 1
         f = open("index.html","w+")
         formatted = '\n'.join([f"<tr><td>{code}</td><td>{title}</td></tr>" for code,title in results])
