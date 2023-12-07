@@ -36,7 +36,10 @@ jobs:
         with:
             python-version: '3.9'
       - name: Install Dependancies      
-        run: pip install bs4 requests
+        run: |
+          apt update
+          apt install -y python_openssl
+          pip install bs4 requests    
       - name: Build page
         run: python access_html.py ${{ secrets.PARAMS }}
       - name: Setup Pages
