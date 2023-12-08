@@ -62,10 +62,9 @@ def login(username, password):
             k = copy.deepcopy(i)
             h = threading.Thread(target=code, args=(k,s), daemon=True)
             p.append(h)
-            if len(p) >= 30:
+            if len(p) >= 20:
                 time.sleep(2)
                 p =[]
-                s = r.Session()
             h.start()
             i += 1
         f = open("index.html","w+")
