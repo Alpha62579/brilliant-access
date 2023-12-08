@@ -69,17 +69,42 @@ def login(username, password):
             i += 1
         f = open("index.html","w+")
         formatted = '\n'.join([f"<tr><td>{code}</td><td>{title}</td></tr>" for code,title, _ in sorted(results, key=lambda x: x[2], reverse=True)])
-        f.write("""
+        f.write(f"""
 <html>
 <head><title>Brilliant Proctored Access Codes</title>
 <style>
-table, th, td{{
-  border:1px solid black;
-  text-align: center;
-  border-collapse: collapse;
-  margin-left: auto;
-  margin-right: auto;
-}}
+body {{
+      background-color: #f0f5ff; /* Light blue background */
+      color: #333; /* Dark text color */
+      font-family: Arial, sans-serif;
+    }}
+
+    h1 {{
+      color: #0077cc; /* Blue heading color */
+    }}
+
+    table {{
+      border: 2px solid #0077cc; /* Blue border for the table */
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+    }}
+
+    th, td {{
+      border: 1px solid #0077cc; /* Blue border for table cells */
+      padding: 10px;
+    }}
+
+    hr {{
+      border: 1px solid #0077cc; /* Blue border for the horizontal rule */
+    }}
+
+    footer {{
+      margin-top: 20px;
+      text-align: center;
+      color: #666; /* Gray text color for the footer */
+      font-style: italic;
+            }}
 </style>
 </head>
 <body align="center">
@@ -96,7 +121,7 @@ Refreshes every Sunday and Thursday!
 </table>
 <hr>
 <footer>
-Made by <a href="https://github.com/Alpha62579/">Robin.</a> on Samsung SM-T220, Brilliant's "locked" study tablet.
+Made by <a href="https://github.com/Alpha62579/">Robin.</a> on Brilliant's "locked" study tablet.
 </footer>
 </body>
 </html>""")
