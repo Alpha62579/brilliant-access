@@ -70,7 +70,7 @@ def login(username, password):
             h.start()
             i += 1
         f = open("index.html","w+")
-        formatted = '\n'.join([f"<tr><td>{code}</td><td>{title}</td></tr>" for code,title, _ in sorted(results, key=lambda x: x[2], reverse=True)])
+        formatted = '\n'.join([f"<tr><td>{code}</td><td><a href={BASE_URL}exams/run/{slug}/start/>{title}</a></td></tr>" for code,title, _, slug in sorted(results, key=lambda x: x[2], reverse=True)])
         f.write(f"""
 <html>
 <head><title>Brilliant Proctored Access Codes</title>
@@ -140,7 +140,7 @@ def code(k, s):
         )
         if res.status_code == 200:
             result = res.json()['results'][0]
-            results.append((k,result['title'], (datetime.datetime.fromisoformat(result["end_date"]) if isinstance(result["end_date"], str) else datetime.datetime.fromisoformat(result["start_date"]))))
+            results.append((k,result['title'], (datetime.datetime.fromisoformat(result["end_date"]) if isinstance(result["end_date"], str) else datetime.datetime.fromisoformat(result["start_date"])), result['slug']))
             count += 1
             print(k, "yay code")
     except Exception:
