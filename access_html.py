@@ -102,6 +102,7 @@ Made by <a href="https://github.com/Alpha62579/">Robin.</a> on Samsung SM-T220, 
 </html>""")
         f.close()
         print("Process complete with", count, "codes found.")
+        exit(0)
 
 def code(k, s):
     global count
@@ -112,10 +113,11 @@ def code(k, s):
         )
         if res.status_code == 200:
             result = res.json()['results'][0]
-            results.append((k,result['title'], datetime.datetime.fromisoformat(result["end_date"])))
+            results.append((k,result['title'], (datetime.datetime.fromisoformat(result["end_date"]) if isinstance(result["end_date"], str) else datetime.datetime.fromisoformat(result["start_date"]))))
             count += 1
             print(k, "yay code")
     except Exception:
         print(traceback.format_exc())
 
 login(sys.argv[1],sys.argv[2])
+exit(0)
