@@ -32,6 +32,5 @@ Dear Brilliant,
   your next ingenious move.
 
 Sincerely,
-A Computer Science student, mastering the riveting art of
-irrelevant subjects for entrance exams
+A Computer Science student.
 ```
