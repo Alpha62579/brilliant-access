@@ -70,7 +70,7 @@ def login(username, password):
             h.start()
             i += 1
         f = open("index.html","w+")
-        formatted = '\n'.join([f"<tr><td>{code}</td><td><a href={BASE_URL}exams/run/{slug}/start/>{title}</a></td></tr>" for code,title, _, slug in sorted(results, key=lambda x: x[2], reverse=True)])
+        formatted = '\n'.join([f"<tr><td>{code}</td><td><a href='{BASE_URL}exams/run/{slug}/start/'>{title}</a></td></tr>" for code,title, _, slug in sorted(results, key=lambda x: x[2], reverse=True)])
         f.write(f"""
 <html>
 <head><title>Brilliant Proctored Access Codes</title>
