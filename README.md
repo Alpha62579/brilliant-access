@@ -4,10 +4,10 @@
 Dear Brilliant,
   I must express my profound gratitude for the sheer brilliance
   of your decisions regarding exams. When the exams were offline,
-  I couldn't visit home, thanks to your remarkable commitment to
-  inconvenience. Now, even with the convenience of online exams,
-  my class teacher seems surprisingly irked by my choice to take
-  them from the comfort of my home.
+  I couldn't visit home without missing an exam and eventually
+  getting questioned for not attending it, thanks to your remarkable                commitment to inconvenience. Now, even with the convenience
+  of online exams, my class teacher seems surprisingly irked by
+  my choice to take them from the comfort of my home.
 
   During the Model Test Series, you graciously made exams fully
   online. Such progress! However, there's a delightful twist —
@@ -17,7 +17,7 @@ Dear Brilliant,
 
   On a day when I felt under the weather, I thought, "Let's skip
   today's exam and get some well-deserved rest." Little did I know,
-   my class teacher decided to turn into my personal life coach,
+  my class teacher decided to turn into my personal life coach,
   calling the hostel warden to ensure I attended the exam. What a
   thoughtful gesture! Now, I'm not only unwell but also incredibly
   annoyed.
