@@ -16,6 +16,8 @@ HEADERS = {
         "X-Key": "d77fe6ed65feef09aeb8cd2d7d8a8044e9f1a79ed102f41e487f49e3713b43d2",
 }
 
+os.mkdir("build")
+os.chdir("./build")
 results = []
 count = 0
 
