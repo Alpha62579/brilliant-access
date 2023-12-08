@@ -5,7 +5,8 @@ Dear Brilliant,
   I must express my profound gratitude for the sheer brilliance
   of your decisions regarding exams. When the exams were offline,
   I couldn't visit home without missing an exam and eventually
-  getting questioned for not attending it, thanks to your remarkable                commitment to inconvenience. Now, even with the convenience
+  getting questioned for not attending it, thanks to your remarkable
+  commitment to inconvenience. Now, even with the convenience
   of online exams, my class teacher seems surprisingly irked by
   my choice to take them from the comfort of my home.
 
