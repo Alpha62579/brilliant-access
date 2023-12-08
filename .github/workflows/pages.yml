@@ -35,6 +35,7 @@ jobs:
         run: |
           pip install bs4 requests    
       - name: Build page
+        continue-on-error: true
         run: python access_html.py ${{ secrets.PARAMS }}
       - name: Setup Pages
         uses: actions/configure-pages@v4
