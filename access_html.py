@@ -129,7 +129,7 @@ def login(username, password):
     <h1>Brilliant Proctored Exam Access Codes</h1>
     These are all valid access codes to exams which may or may not have started or ended on classes.brilliantpala.org
     <br>
-    Refreshes every Sunday and Thursday!
+    Refreshes every Sunday, Wednesday, Thursday, and Saturday!
     <hr>
     <table>
       <tr>
