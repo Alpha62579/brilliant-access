@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '30 18 * * SAT,WED'
+    - cron:  '30 18 * * FRI,SAT,WED,TUE'
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
