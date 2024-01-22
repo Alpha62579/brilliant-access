@@ -1,5 +1,6 @@
 import sys
 import requests
+from requests.adapters import HTTPAdapter, Retry
 import threading
 import traceback
 import datetime
