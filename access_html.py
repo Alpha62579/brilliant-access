@@ -1,6 +1,5 @@
 import sys
-import requests
-from requests.adapters import HTTPAdapter, Retry
+import requests as r
 import threading
 import traceback
 import datetime
@@ -21,10 +20,6 @@ os.mkdir("build")
 os.chdir("./build")
 results = []
 count = 0
-
-r = requests.Session()
-r.headers = HEADERS
-r.mount("http://", HTTPAdapter(max_retries=Retry(total=3, backoff_factor=2, status_forcelist=[502, 503, 504])))
 
 
 def login(username, password):
