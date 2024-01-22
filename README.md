@@ -36,9 +36,4 @@ Sincerely,
 A Computer Science student.
 ```
 ## Takedown
-If you wish for me to take down this website, well, ask me personally.
-I swear I'm atleast known by someone in your team which deals with the 
-study tablets. I'll do have you know that I'll refuse if you're rude to
-me when you do so.
-
-Hint: I was warned twice for rooting the tablets.
+Just open an issue and we'll talk.
