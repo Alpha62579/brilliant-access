@@ -129,7 +129,7 @@ def login(username, password):
     <h1>Brilliant Proctored Exam Access Codes</h1>
     These are all valid access codes to exams which may or may not have started or ended on classes.brilliantpala.org
     <br>
-    ATTENTION: This website will only remain updated till the end of the Model Test Series (LT-24/Residential 2024 Batch)
+    ATTENTION: This website has stopped updating until the next Model Test Series on the 10th of February.
     <hr>
     <table>
       <tr>
