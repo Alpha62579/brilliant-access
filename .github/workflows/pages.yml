@@ -4,9 +4,9 @@ name: Build page
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-  #schedule:
+  schedule:
     # * is a special character in YAML so you have to quote this string
-    # - cron:  '30 18 * * SAT,SUN,MON,TUE,THU'
+    - cron:  '30 18 * * FRI,SAT'
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
