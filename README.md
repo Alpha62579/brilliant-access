@@ -36,4 +36,4 @@ Sincerely,
 A Computer Science student.
 ```
 ## Takedown
-Just open an issue and we'll talk.
+Open an issue.
