@@ -127,9 +127,7 @@ def login(username, password):
   </head>
   <body align="center">
     <h1>Brilliant Proctored Exam Access Codes</h1>
-    These are all valid access codes to exams which may or may not have started or ended on classes.brilliantpala.org
-    <br>
-    Updates paused until schedule for REP25 batch is confirmed.
+    These are all valid access codes to exams which may or may not have started or ended on classes.brilliantpala.org.
     <hr>
     <table>
       <tr>
