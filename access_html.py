@@ -73,6 +73,7 @@ def login(username, password):
                 p = []
             h.start()
             i += 1
+        h.join()
         f = open("index.html", "w+")
         formatted = "\n".join(
             [
