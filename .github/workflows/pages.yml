@@ -40,6 +40,8 @@ jobs:
       - name: Build page
         continue-on-error: true
         run: python access_html.py ${{ secrets.PARAMS }}
+      - name: Copy AutoRender
+        run: cp autorender.html ./build/autorender.html
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
