@@ -1,4 +1,4 @@
-# Simple workflow for deploying static content to GitHub Pages
+p# Simple workflow for deploying static content to GitHub Pages
 name: Build page
 
 on:
@@ -47,7 +47,7 @@ jobs:
       - name: Copy AutoRender
         run: cp autorender.html ./build/autorender.html
       - name: Copy Static
-        run: cp static/ ./build/
+        run: cp -r static/ ./build/
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
