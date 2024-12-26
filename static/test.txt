@@ -1,6 +1,0 @@
-Hello world!
-
-This is a static directory listing test!
-If you are reading this, it means that the test has passed!
-
-Robin.
