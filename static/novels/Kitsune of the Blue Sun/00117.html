@@ -1,0 +1,287 @@
+
+    <!DOCTYPE html>
+        <html dir="ltr">
+        <head>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <title>Chapter 111- Getting To Falheim’S Dead Zone</title>
+            <style>
+                @import url("https://fonts.googleapis.com/css?family=Merriweather:400,400i,700,700i");
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #323235;
+  -webkit-font-smoothing: antialiased;
+}
+
+#content {
+  padding: 10px 20px;
+  max-width: 850px;
+  margin: 10px auto;
+  font-size: 16px;
+  text-align: justify;
+  line-height: 1.8;
+  border-radius: 5px;
+  background-color: #fffff0;
+  box-shadow: 0 0 10px #000, 0 0 0 1px #000;
+  font-family: "Merriweather", Georgia, "Times New Roman", Times, serif;
+}
+
+#content img {
+  width: 100%;
+}
+
+@media (max-width: 925px) {
+  #content {
+    margin: 5px;
+    max-width: auto;
+  }
+}
+
+main {
+  min-height: 500px;
+  padding: 0 10px;
+}
+
+p + br{
+  display: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #555;
+  padding: 10px;
+  margin: 0;
+  text-align: center;
+  line-height: normal;
+}
+
+h1 {
+  color: #333336;
+  font-weight: 300;
+  margin-bottom: 15px;
+}
+
+h1:after {
+  content: "-";
+  margin: 10px 30px;
+  height: 2px;
+  border-radius: 50%;
+  background: #444;
+  display: block;
+  color: transparent;
+}
+
+.link-group {
+  padding: 10px;
+  margin: 15px 0;
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #dee2ef;
+  border: 1px solid #dde;
+}
+
+.link-group .btn {
+  color: #333;
+  font-family: sans-serif;
+  font-size: 18px;
+  font-weight: Arial, 600;
+  display: inline-block;
+  width: 145px;
+  padding: 5px;
+  text-align: center;
+  background: #f5f5f5;
+  box-shadow: 1px 1px 2px #aac, 0 0 0 1px #ccc;
+  border-radius: 5px;
+}
+
+.link-group .toc {
+  cursor: pointer;
+  color: #323235;
+  width: 100%;
+  max-width: 350px;
+  padding: 8px 12px;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px #aac, 0 0 0 1px #ccc;
+}
+
+.link-group .btn:hover,
+.link-group .toc:hover {
+  background: #ececef;
+}
+
+.link-group .btn:active {
+  box-shadow: 0 0 2px #dee2ef inset, 0 0 0 1px #ccc;
+}
+
+.link-group a {
+  color: #39f;
+  text-decoration: none;
+}
+
+.link-group a[href="#"],
+.link-group a[href="#"]:hover,
+.link-group a[href="#"]:active {
+  color: #888;
+  background: #eee;
+  box-shadow: 0 0 0 1px #ddd;
+}
+
+div#readpos {
+  border-radius: 10px;
+  font-weight: bold;
+  font-family: monospace;
+  color: #770;
+  font-size: 14px;
+  padding: 5px 10px;
+  background: white;
+  box-shadow: 0 0 10px #333, 0 0 0 1px #dde;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  user-select: none;
+  -webkit-user-drag: none;
+  /* min-width: 100px;
+    text-align: right; */
+}
+
+@media print {
+  #content {
+    margin: 0;
+    max-width: none;
+    box-shadow: none;
+  }
+  .link-group {
+    display: none;
+  }
+}
+
+            </style>
+            <script type="text/javascript">
+                let keyPressTimer = null;
+let navigationInterval = null;
+
+function goToHref(el) {
+  if (!el) return;
+  const href = el.getAttribute("href");
+  if (href === "#") return;
+  window.location.href = href;
+}
+
+function startNavigation(direction) {
+  if (direction === "left") {
+    keyPressTimer = setTimeout(() => {
+      navigationInterval = setInterval(() => {
+        goToHref(document.querySelector("a.prev-button"));
+      }, 50);
+    }, 100);
+  } else if (direction === "right") {
+    keyPressTimer = setTimeout(() => {
+      navigationInterval = setInterval(() => {
+        goToHref(document.querySelector("a.next-button"));
+      }, 50);
+    }, 100);
+  }
+}
+
+function stopNavigation() {
+  clearTimeout(keyPressTimer);
+  clearInterval(navigationInterval);
+}
+
+window.addEventListener("keydown", function (evt) {
+  switch (evt.key) {
+    case "ArrowLeft":
+      if (!keyPressTimer && !navigationInterval) {
+        startNavigation("left");
+      }
+      break;
+    case "ArrowRight":
+      if (!keyPressTimer && !navigationInterval) {
+        startNavigation("right");
+      }
+      break;
+    default:
+      break;
+  }
+});
+
+window.addEventListener("keyup", function (evt) {
+  stopNavigation();
+  switch (evt.key) {
+    case "ArrowLeft":
+      goToHref(document.querySelector("a.prev-button"));
+      break;
+    case "ArrowRight":
+      goToHref(document.querySelector("a.next-button"));
+      break;
+    default:
+      break;
+  }
+});
+
+
+// Handle next TOC select
+function addTocSelectListener() {
+  document.querySelectorAll("select.toc").forEach((select) => {
+    select.addEventListener("input", (evt) => {
+      window.location.href = evt.currentTarget.value;
+    });
+  });
+}
+
+// Handle update reading progress on scroll
+let debounceTimeout;
+function debouncedUpdate(evt) {
+  clearTimeout(debounceTimeout);
+  debounceTimeout = setTimeout(() => {
+    var scroll = window.scrollY;
+    var height = document.body.scrollHeight - window.innerHeight + 10;
+    var percent = Math.round((100.0 * scroll) / height);
+    document.getElementById("readpos").innerText = percent + "%";
+  }, 100); // 100ms delay
+}
+
+window.addEventListener("scroll", debouncedUpdate);
+
+window.addEventListener("load", function (evt) {
+  addTocSelectListener();
+});
+
+            </script>
+        </head>
+        <body>
+            <div id="content">
+                
+    <div class="link-group">
+        <a class="btn prev-button" href="00116.html">Previous</a>
+        <select class="toc"><option value="00001.html">Prologue</option><option value="00002.html">Chapter 1- Fated Ones And Reincarnation</option><option value="00003.html">Chapter 2- Complications Already</option><option value="00004.html">Chapter 3- One Week Later</option><option value="00005.html">Chapter 4- Three Years Later</option><option value="00006.html">Chapter 5- Training Starts And The Return Of The Chaos Realm</option><option value="00007.html">Chapter 6- Age Five</option><option value="00008.html">Chapter 7- Name</option><option value="00009.html">Side Chapter 1- Consequences</option><option value="00010.html">Chapter 8- Missing Information</option><option value="00011.html">Chapter 9- A Town And Destination Plans</option><option value="00012.html">Chapter 10- Escape</option><option value="00013.html">Chapter 11- Rainy Day Rest</option><option value="00014.html">Chapter 12- Arriving At A City</option><option value="00015.html">Chapter 13- Solar Convergence</option><option value="00016.html">Chapter 14- To Solheim</option><option value="00017.html">Chapter 15- Meeting With The Guild Master</option><option value="00018.html">Chapter 16- Plans For The Future</option><option value="00019.html">Chapter 17- A New Home</option><option value="00020.html">Chapter 18- Training Starts And A New Friend?</option><option value="00021.html">Chapter 19- Progress And Beast Companions</option><option value="00022.html">Chapter 20- Soul Weapon</option><option value="00023.html">Chapter 21- Getting A Guild Card</option><option value="00024.html">Chapter 22- Keeno Okami The Snowfire Princess</option><option value="00025.html">Chapter 23- Magic</option><option value="00026.html">Chapter 24- Solar Convergence 2-Fluffy Boogaloo</option><option value="00027.html">Chapter 25- Intentions</option><option value="00028.html">Chapter 26- Going To See Pram</option><option value="00029.html">Chapter 27- 16 Years Old And Resolve For The Future Journey</option><option value="00030.html">Chapter 28- Purification</option><option value="00031.html">Chapter 29- Fia’S Final Test</option><option value="00032.html">Chapter 30- While The Fox Is Away, The Phoenix And Leopard Will Talk</option><option value="00033.html">Chapter 31- Amaterasu’S Proposition</option><option value="00034.html">Chapter 32- Fia’S Goodbye</option><option value="00035.html">Chapter 33- Preparations Before The Start Of The Journey</option><option value="00036.html">Chapter 34- Pram’S Training And An Interruption</option><option value="00037.html">Side Chapter 2- Delusions</option><option value="00038.html">Chapter 35- And So It Begins</option><option value="00039.html">Chapter 36- Short-Term Goals</option><option value="00040.html">Chapter 37- A Small Teachable Moment</option><option value="00041.html">Chapter 38- Reaching The City</option><option value="00042.html">Chapter 39- Waiting Out The Storm</option><option value="00043.html">Chapter 40- Amaterasu’S Anxiety</option><option value="00044.html">Chapter 41- On The Road Again</option><option value="00045.html">Chapter 42- Fluff With Some Spice</option><option value="00046.html">Chapter 43- The Evening After</option><option value="00047.html">Chapter 44- The Search For The Well Begins</option><option value="00048.html">Chapter 45- Curse Dispelling</option><option value="00049.html">Chapter 46- Gaining Knowledge</option><option value="00050.html">Chapter 47- Trial Of Knowledge</option><option value="00051.html">Chapter 48- Leaving The Well</option><option value="00052.html">Chapter 49- Mountain Pass Traversal</option><option value="00053.html">Chapter 50- Stepping Foot In Odeen</option><option value="00054.html">Side Chapter 3- Aside In The Capital Of Odeen</option><option value="00055.html">Chapter 51- Odeen Is Not Off To A Good Start</option><option value="00056.html">Chapter 52- Finally, Some Bandits</option><option value="00057.html">Chapter 53- Fluff On A Boat</option><option value="00058.html">Chapter 54- More Fluff</option><option value="00059.html">Chapter 55- Small Confrontation And A Fun Conversation</option><option value="00060.html">Chapter 56- Arrival In Vanir</option><option value="00061.html">Chapter 57- Freya</option><option value="00062.html">Chapter 58- Questions</option><option value="00063.html">Chapter 59- Deciding What Needs To Be Done</option><option value="00064.html">Chapter 60- To The Guild</option><option value="00065.html">Chapter 61- Time For Work</option><option value="00066.html">Chapter 62- Clothes Shopping</option><option value="00067.html">Chapter 63- An Unexpected Meeting</option><option value="00068.html">Chapter 64- Red’S Story</option><option value="00069.html">Chapter 65- Planning</option><option value="00070.html">Chapter 66- Dead Zone Plan</option><option value="00071.html">Chapter 67- Dead Zone</option><option value="00072.html">Chapter 68- Leaving Vanir’S Capital</option><option value="00073.html">Chapter 69- Divine Visitors</option><option value="00074.html">Chapter 70- Escaping The Rain For Some Fluff</option><option value="00075.html">Chapter 71- Foxes, The Teasening</option><option value="00076.html">Side Chapter 4- Side: Falheim-Rebels</option><option value="00077.html">Chapter 72- Time For Some Red</option><option value="00078.html">Chapter 73- Random Encounter On The Road</option><option value="00079.html">Chapter 74- Tasty Treats And Magical Explosions</option><option value="00080.html">Chapter 75- Red’S Adoption</option><option value="00081.html">Chapter 76- Competitive Impulses</option><option value="00082.html">Chapter 77- Prelude To A Big Event</option><option value="00083.html">Chapter 78- Horde Preparation</option><option value="00084.html">Chapter 79- Start Of The Defense</option><option value="00085.html">Chapter 80- End Of The Defense</option><option value="00086.html">Chapter 81- Pram: Teaser Extraordinaire</option><option value="00087.html">Chapter 82- Freya Things With A Side Of Fluff</option><option value="00088.html">Chapter 83- Keeno’S Side</option><option value="00089.html">Chapter 84- Keeno Meets The Twins</option><option value="00090.html">Chapter 85- New Titles</option><option value="00091.html">Chapter 86- Birding Around</option><option value="00092.html">Chapter 87- Travel Montage Time!</option><option value="00093.html">Chapter 88- Fort Battle</option><option value="00094.html">Chapter 89- Reunion</option><option value="00095.html">Chapter 90- A Lady And Her Retainers</option><option value="00096.html">Chapter 91- Pram And Freya- Learning From Emma</option><option value="00097.html">Chapter 92- Amaterasu’S Worries</option><option value="00098.html">Chapter 93- Red’S A Genius</option><option value="00099.html">Chapter 94- Meeting The Rebel Commander</option><option value="00100.html">Chapter 95- A Lesson In Divinity</option><option value="00101.html">Chapter 96- Taboo</option><option value="00102.html">Chapter 97- Talks With A Dragon</option><option value="00103.html">Chapter 98- Talking With Ama And Negotiations</option><option value="00104.html">Special Fluff Chapter</option><option value="00105.html">Chapter 99- Setting Out</option><option value="00106.html">Chapter 100- Beginner Necromancy</option><option value="00107.html">Chapter 101- Siege Of The Mountain</option><option value="00108.html">Chapter 102- Aftermath Of The Siege</option><option value="00109.html">Chapter 103- Proposition To Ortlinde</option><option value="00110.html">Chapter 104- Introducing Ortlinde To The Others.</option><option value="00111.html">Chapter 105- Talking With Fafnir And An Omen</option><option value="00112.html">Chapter 106- The Beginning Of The Fall Of Falheim</option><option value="00113.html">Chapter 107- The Beast Emerges</option><option value="00114.html">Chapter 108- Two Battles, One Conclusion</option><option value="00115.html">Chapter 109- Convincing Freyr</option><option value="00116.html">Chapter 110- Angry Fox Commits Regicide</option><option value="00117.html" selected>Chapter 111- Getting To Falheim’S Dead Zone</option><option value="00118.html">Chapter 112- Dead Zone Two: Gone, Tail Three: Obtained</option><option value="00119.html">Special Christmas Chapter</option><option value="00120.html">Chapter 113- Arise Dragon, Dragon Arise</option><option value="00121.html">Chapter 114- Some Bonding With Fafnir</option><option value="00122.html">Chapter 115- Long Awaited Date</option><option value="00123.html">Chapter 116- Chatting With Emma And Fafnir</option><option value="00124.html">Side Chapter 5- Red And Ortilinde</option><option value="00125.html">Chapter 117- Time To Save Falheim</option><option value="00126.html">Chapter 118- Falheim Makes Keeno Mad…Again</option><option value="00127.html">Chapter 119- The Family Grows</option><option value="00128.html">Chapter 120- Core Awakening</option><option value="00129.html">Chapter 121- Time To Leave Falheim</option><option value="00130.html">Chapter 122- First Day Of Flight And Pram’S Plight</option><option value="00131.html">Chapter 123- A Relaxing Morning</option><option value="00132.html">Chapter 124- Day Of Parting Hath Come</option><option value="00133.html">Side Chapter 6- Something Nothing Can Escape</option><option value="00134.html">Chapter 125- Broke Once More!</option><option value="00135.html">Chapter 126- Angry Wolf, Angry Fox</option><option value="00136.html">Chapter 127- Finishing Up With The Bandits</option><option value="00137.html">Chapter 128- Exploring The Ruins</option><option value="00138.html">Chapter 129- Creation Myth: As Interpreted By Keeno</option><option value="00139.html">Chapter 130- Realization</option><option value="00140.html">Chapter 131- Back On The Road</option><option value="00141.html">Chapter 132- Negotiations?</option><option value="00142.html">Chapter 133- The Return Of Amaterasu</option><option value="00143.html">Chapter 134- Relaxing In The City</option><option value="00144.html">Chapter 135- A Dance To Remember</option><option value="00145.html">Chapter 136- Well, That Happened</option><option value="00146.html">Chapter 137- 20Th Birthday</option><option value="00147.html">Chapter 138- Reconciliation</option><option value="00148.html">Chapter 139- Decisions Decisions</option><option value="00149.html">Chapter 140- Capital City, Or Small Country?</option><option value="00150.html">Chapter 141- The Meeting</option><option value="00151.html">Special Collab Chapter</option><option value="00152.html">Chapter 142- Recognition</option><option value="00153.html">Chapter 143- A Break For Some Research</option><option value="00154.html">Chapter 144- Eblana The Go Getter</option><option value="00155.html">Chapter 145- A Reunion And Planning</option><option value="00156.html">Chapter 146- Getting The Plan Underway</option><option value="00157.html">Chapter 147- Meet And Run</option><option value="00158.html">Chapter 148- Spice And Fox</option><option value="00159.html">Chapter 149- Four Fluffs, More Powa!!!</option><option value="00160.html">Chapter 150- Dragons Reunited</option><option value="00161.html">Chapter 151- Dragon Rests For The Long Winter</option><option value="00162.html">Chapter 152- The Fox Receives A Warning</option><option value="00163.html">Chapter 153- Getting One Obstacle Out Of The Way</option><option value="00164.html">Chapter 154- A Special Kind Of Dance</option><option value="00165.html">Chapter 155- Moar Fluff!!!</option><option value="00166.html">Side Chapter 7- Meeting Of Dragons</option><option value="00167.html">Chapter 156- Solemnity</option><option value="00168.html">Chapter 157- The Dragon Appears</option><option value="00169.html">Chapter 158- Talking With A Future Valkyrie</option><option value="00170.html">Chapter 159- Valkyrie Training</option><option value="00171.html">Chapter 160- A Long Journey’S Intermission</option><option value="00172.html">Chapter 161- Sparring</option><option value="00173.html">Chapter 162- Another Myth Experienced</option><option value="00174.html">Chapter 163- Anti-Distraction Training</option><option value="00175.html">Chapter 164- Arrival In Lokir</option><option value="00176.html">Chapter 165- A Rare Sight</option><option value="00177.html">Chapter 166- Creatures Of The Ash Desert</option><option value="00178.html">Chapter 167- Flame Eternal No Longer</option><option value="00179.html">Chapter 168- Planning For Firefighting</option><option value="00180.html">Chapter 169- Getting To Know Geri And Freki</option><option value="00181.html">Chapter 170- Not Even A Day And Something Happens</option><option value="00182.html">Chapter 171- A Painful Time In The Desert</option><option value="00183.html">Chapter 172- Wings!</option><option value="00184.html">Chapter 173- A Meeting</option><option value="00185.html">Chapter 174- An Unexpected Development</option><option value="00186.html">Chapter 175- Steam And Fox</option><option value="00187.html">Chapter 176- A Mystery</option><option value="00188.html">Chapter 177- Entering Capital Lokir</option><option value="00189.html">Chapter 178- Getting A Grasp Of Lokir</option><option value="00190.html">Chapter 179- A Second Meeting</option><option value="00191.html">Chapter 180- The Den Of Wolves</option><option value="00192.html">Chapter 181- The First Of Many</option><option value="00193.html">Chapter 182- Angry Isn’T Enough To Describe</option><option value="00194.html">Chapter 183- The First Strike</option><option value="00195.html">Chapter 184- The Invitation</option><option value="00196.html">Chapter 185- Meeting With Sif And Future Discussion</option><option value="00197.html">Chapter 186- Witchling</option><option value="00198.html">Chapter 187- A Date To Soothe The Soul</option><option value="00199.html">Chapter 188- The Beginnings Of Phase Two</option><option value="00200.html">Chapter 189- Mostima Joins The Purge</option><option value="00201.html">Chapter 190- Advent Of A Goddess</option><option value="00202.html">Chapter 191- Waking Up Again</option><option value="00203.html">Chapter 192- Time To Return Home</option><option value="00204.html">Chapter 193- Return Home</option><option value="00205.html">Chapter 194- Freya Meets The Family</option><option value="00206.html">Chapter 195- Meeting In The Night</option></select>
+        <a class="btn next-button"  href="00118.html">Next</a>
+    </div>
+    
+                <main><h1>Chapter 111- Getting To Falheim’S Dead Zone</h1><p>Chapter 111- Getting to Falheim’s Dead Zone</p><p>[Keeno POV]</p><p>The four of us stepped behind the throne and immediately saw a door. It was very ornate and built into the giant window that was behind the throne and went all the way to the ground. The door was placed in the window in a way that looked like it was the beginning guns a path towards the floating castle.</p><p>“How subtle.” (Keeno)</p><p>I walked up to the door and touched it. The door instantly burst into flames and a few minutes later, the glass surrounding it either melted or broke.  The sound of shattering was louder than I expected, but at the moment I didn’t care. I was still fuming, and I just wanted to release some frustration.</p><p>“My Lady, I get that you are quite…upset at the moment, but please at least turn down the heat a bit. Your clothes are starting to burn.” (Emma)</p><p>Hearing Emma’s words, I looked down and saw she was right. Though the important places were still covered, the rest of my clothes were basically worthless now.</p><p>“*Sigh*I really need to find a place that has fireproof clothes.” (Keeno)</p><p>{I’ll add that to the list of places I’m going to take you next time we see each other.}</p><p>“Sounds good.” (Keeno)</p><p>I stepped through the hole in the wall and around a corner before I removed my useless clothes and changed into some new ones.  After I was done with that I looked up and saw a hallway lined with yet more stained glass, only these all had depictions of the king.  Just seeing this pissed me off more, so as we went, I made sure to melt each and every one of the windows.</p><p>“Ya know, I’m glad we’re getting this one out of the way. No offense, Keeno, but seeing you so angry so often is really not nice. I miss seeing you smile and, Lady Amaterasu save me, your teasing.” (Pram)</p><p>{Why are you asking me to save you?  You know I’d happily join in on Keeno’s teasing.}</p><p>“YOU KNOW WHAT I MEANT!” (Pram)</p><p>{Hehehehe.}</p><p>“Hehe.  I agree, Pram. I really do. Though, honestly, I wasn’t expecting to be this angry constantly either. I knew I’d be far from happy, sure, but this near constant boiling rage is exhausting.  Though admittedly, the throne room debacle aside, it’s calmed down quite considerably. Killing the Taboo Breaker really helped dispel a lot of grudge.” (Keeno)</p><p>“That’s good. Guess collecting so much of it in one place does the job well.” (Freya)</p><p>“Well enough at least, though honestly, I’m sick of this place. I just want out.” (Keeno)</p><p>“Sounds like you need a break, my Lady.” (Emma)</p><p>“I’d love one. No offense to you three, but I’d really just like a day with Ama and myself.  Good thing Solar Convergence isn’t too far off, but I’m impatient.” (Keeno)</p><p>“No offense taken. You deserve it. And besides, it would give me and Freya some time to ourselves as well.” (Pram)</p><p>“I quite like that idea, though I’d prefer we go on a date somewhere not in this country.” (Freya)</p><p>“Seconded.” (Pram)</p><p>“Gah!  I’m surrounded by people with partners.” (Emma)</p><p>“There’s always Selkie.” (Keeno)</p><p>“No.  I’ve said it before, and I’ll say it now, I never felt for her that way, and besides, since my looks have changed, she’s become all distant. Still treats me the same, but that sparkle disappeared.” (Emma)</p><p>“Maybe she figured out what she felt wasn’t love?” (Pram)</p><p>“Probably.” (Freya)</p><p>“Well, as long as we stay friends, I’m fine with that.” (Emma)</p><p>I was about to add my own thoughts to this topic, but before I could, we exited the hallway we’d been following. Outside the rather simple door we were faced with a very windy canyon with a well-traveled bridge going up into the clouds around the peaks of the mountains.</p><p>“…” (Keeno)</p><p>{Keeno, you’re getting that look again.}</p><p>“What look?” (Fu)</p><p>{The one she gets when she finds something she thinks is exciting.}</p><p>“You sun foxes and your moods. How can she go from boiling mad to bouncing excitement so fast!?” (Moco)</p><p>{…}</p><p>“Don’t say anything, I realized it just as the words left my mouth.” (Moco)</p><p>“At least you’re self aware. Not that it’s a bad thing.  By the way, how is Ortlinde? She’s been quiet for a while.” (Keeno)</p><p>“She’s doing good, she was with Red a little while ago and they played around a bit before tiring themselves out. Now they are napping next to each other in a nice sunny spot. Honestly, I’m kind of tempted to join them. Rasu’s place is always peak napping space.” (Moco)</p><p>“Too bad you have to keep watching this, Moco, Imma go nap with them!” (Fu)n/ô/vel/b//in dot c//om</p><p>“TRAITOR!” (Moco)</p><p>“When it comes to napping with your family in the best sunny spots in all the Divine Domain, alls fair in Fluff and War.” (Fu)</p><p>“I’M LITERALLY WAR ITSELF!” (Moco)</p><p>“Wahahahahaha!” (Fu)</p><p>“Can you two keep it down, please.  All this yelling is giving me a headache and killing the excitement of this wonderful bridge into mystery.” (Keeno)</p><p>““Sorry.”” (Fu and Moco)</p><p>“Oh, Freya, stick close to Pram, she’s not great with stuff like this.” (Keeno)</p><p>“Oh?” (Freya)</p><p>“Yep.  I hate all this high up stuff.  Never have, never will.” (Pram)</p><p>“Adorable.” (Freya)</p><p>“Well, no way but up.  Onward!” (Keeno)</p><p>I took one step onto the bridge, and my sense of excitement diminished some.</p><p>“…What a let down. No creak or noise of stress. Where is the fun in that?” (Keeno)</p><p>I continued up the bridge, the others trailing behind me at a slower pace.  About 15 minutes later, I made it to the cloud layer and started to push through the clouds.  I was actually a bit chilly, so I increased the heat around me.  A few minutes in and I felt like I passed through some kind of barrier.</p><p>“So, there was the border to the Dead Zone.” (Keeno)</p><p>{Hehehe.  I hope you’re ready, Keeno.}</p><p>“For what?” (Keeno)</p><p>{You’ll see.}</p><p>As soon as Ama’s words were said, I exited the cloud layer, and my eyes went wide. Towering in front of me was a wall made of ancient looking stone. It had pictures carved into it like some of the ancient buildings in my past life with so much detail they almost looked alive.</p><p>“Amaterasu Okami, you’re telling me this Dead Zone is an ancient floating sky ruin!” (Keeno)</p><p>{It is indeed.}</p><p>“I could push you down and do many things to you right now if only you were here. This is making all the annoyance of Falheim worth it.” (Keeno)</p><p>{That’s why I never told you what the Dead Zone here was specifically. I knew this reaction would be worth it.}</p><p>As I was admiring any would be archaeologists’ dream of a structure, the others finally caught up.</p><p>“…” (Emma)</p><p>“This is…” (Freya)</p><p>“…” (Pram)</p><p>I turned around to see the others’ reactions. Emma looked amazed while Freya was shocked, and Pram was being held in a Princess carry with her eyes shut tightly.</p><p>“Are we on good ground again?” (Pram)</p><p>“I wouldn’t open your eyes just yet.” (Freya)</p><p>“Mm-hmm.” (Pram)</p><p>Chuckling inwardly at Pram being cute, I looked around for a way to get up the wall and noticed that just behind the carved statues were things that looked like stairs.  Following them, I saw what looked like the ends of a bridge that had rotted away and fallen.  I walked over to that spot and looked from where I was standing and the gap to the ruins.  I nodded my head and summoned one of my Soul Weapons. I backed up a little and then started to sprint. When I hit the edge, I leapt and threw my sword into the wall. It stuck and held and once I stopped swinging like a pendulum, I started to climb. After a few minutes I clambered onto the bottom steps of the ruin.</p><p>“Well, that was fun, though now my arms are sore.” (Keeno)</p><p>{I give it an 8 out of 10. You could have added more flare.}</p><p>“Hehe.” (Keeno)</p><p>{Pfft.}</p><p>Turning around, I took out some rope and one of the stakes we use for our tents, and I stabbed it into the stone.  I made sure it was secure then tied the rope around it before dropping the rest off the edge.</p><p>“…My Lady, no offense, but you are insane.  I’ve done some crazy things in life, but never something like this, and I really don’t feel like trying it.” (Emma)</p><p>“I would join, but I feel if I do, Pram is going to kill me.” (Freya)</p><p>“And I’m not even going to say anything.  I can’t see what any of you are talking about, but knowing Keeno, it’s something I’m definitely not comfortable with, so I’m not even going to say anything more.” (Pram)</p><p>“…” (Keeno)</p><p>{You can summon Emma to you.}</p><p>“That sound fine, Emma?” (Keeno)</p><p>“Yeah.” (Emma)</p><p>“I think Pram and I will stay here.  You go on ahead and get what you need to get done, done.  If something happens, we’ll make sure you can at least find your way back to the bridge.” (Freya)</p><p>“Got it.  I’ll let you two know if anything happens on my end.” (Keeno)</p><p>I started to walk up the aged steps being careful not to step on any spots that were clearly unstable.  I also inspected some of the statues while I was at it.</p><p>“Greek sculptors, eat your hearts out.  These are so well done it’s almost like these are actual people and animals.  Like, seriously, it’s insane.” (Keeno)</p><p>{This place’s people were very artistic in their time.  This castle and its walls were their magnum opus.  It was the work of every citizen and took several hundred years to complete, but they managed.  Honestly, they were very entertaining to observe, it’s a shame how they ended, with this place being the last piece of art every created by them.}</p><p>“Is that why there is a Dead Zone here?” (Keeno)</p><p>{Partly.  It was mostly because this was the place where a large amount of people died in the Fiend Season.  That’s what whipped out that civilization.}</p><p>“And there aren’t any other pieces from these people left behind anywhere else?” (Keeno)</p><p>{Not to my knowledge, though the God of Art might have tasked his Apostle to find and collect as much of it as possible and I didn’t know.  Don’t know the guy well enough to ask and don’t really feel like getting to know him better either.  He’s always been…eccentric.}</p><p>“How eccentric are we talking here?” (Keeno)</p><p>{First thing he asks anyone he meets for the first time is if he can paint them naked.  Every.  Single.  Time.}</p><p>“…” (Keeno)</p><p>{I know what you’re thinking, and yes, and don’t try it, he’s had it happen several times over, it just gives him more inspiration.}</p><p>“Tch.  Guess his eyes are going to stay in his head then.” (Keeno)</p><p>{Enough about him, you figured out how to summon Emma yet, or do you want my help?}</p><p>“I think I have an idea.” (Keeno)</p><p>I soon found myself closing in on the top of the stairs and what I saw when I finally reached the top astounded me.  The entire place was perfectly preserved, like not a single day had gone by.  Not fading from the suns, no cracks, not chips, not deteriorated paints, nothing.</p><p>“How is the top like this when the walls and stairs down aren’t?  What kind of sorcery is this!?” (Keeno)</p><p>{I may have added some slight preservation elements to this Dead Zone, but only to the area where I liked.  I didn’t really care for the sides all that much since, after a while of seeing those statues, they get kind of creepy.}</p><p>As I was admiring the scenery, I started to notice that the shadows seemed to be moving, and when I concentrated harder on them, I saw they were full of souls of varying shades of grey and black.</p><p>“Seem’s like even the Death Spirits understood the meaning you put into the Dead Zone here since they’re trying to stay out of sight as much as possible.” (Keeno)</p><p>{Such considerate little things.}</p><p>I admired the scenery a little more before getting back on track with what I had to do.  I closed my eyes and focused on my connection with Emma.  I then pictured myself pulling on it and a few seconds later, Emma let out a surprised noise.</p><p>“Wah!” (Emma)</p><p>“It worked!  Yay!” (Keeno)</p><p>{Good job.}</p><p>“You can praise me more.” (Keeno)</p><p>{You did so wonderfully, Keeno.  You’re amazing, and beautiful, and cute, and I want nothing more than to just pull you close and kiss you all day and night for all eternity.}</p><p>“Ehehehe.” (Keeno)</p><p>“…I feel like I shouldn’t be seeing this, yet I love that I’m finally getting to see a side of you that I’ve never seen before.” (Emma)</p><p>“*Ahem*Now, let’s go!” (Keeno)</p><p>“…Not even going to acknowledge what I said?” (Emma)</p><p>“Now, let’s go!” (Keeno)</p><p>“I’ll take that as a no.” (Emma)</p><p>Chaos Realm:</p><p>Tamamo: It’s good to see Keeno get to let loose a bit more in Falheim.</p><p>Luna: Yeah.  And I can totally tell that once she’s out, she’s going to flirt with Amaterasu and tease the others so much that it’ll drive normal people insane.</p><p>Tamamo: It’s never good to keep it all bottled up like that.</p><p>Luna: Exactly.  She should let her Kitsune Nature out.</p><p>Atmos: I just got chills.  Why did I just get chills?</p><p>Luna: No idea, just go back to watching whatever it is you’re watching.</p><p>Atmos: Oki.</p></main>
+                
+    <div class="link-group">
+        <a class="btn prev-button" href="00116.html">Previous</a>
+        <select class="toc"><option value="00001.html">Prologue</option><option value="00002.html">Chapter 1- Fated Ones And Reincarnation</option><option value="00003.html">Chapter 2- Complications Already</option><option value="00004.html">Chapter 3- One Week Later</option><option value="00005.html">Chapter 4- Three Years Later</option><option value="00006.html">Chapter 5- Training Starts And The Return Of The Chaos Realm</option><option value="00007.html">Chapter 6- Age Five</option><option value="00008.html">Chapter 7- Name</option><option value="00009.html">Side Chapter 1- Consequences</option><option value="00010.html">Chapter 8- Missing Information</option><option value="00011.html">Chapter 9- A Town And Destination Plans</option><option value="00012.html">Chapter 10- Escape</option><option value="00013.html">Chapter 11- Rainy Day Rest</option><option value="00014.html">Chapter 12- Arriving At A City</option><option value="00015.html">Chapter 13- Solar Convergence</option><option value="00016.html">Chapter 14- To Solheim</option><option value="00017.html">Chapter 15- Meeting With The Guild Master</option><option value="00018.html">Chapter 16- Plans For The Future</option><option value="00019.html">Chapter 17- A New Home</option><option value="00020.html">Chapter 18- Training Starts And A New Friend?</option><option value="00021.html">Chapter 19- Progress And Beast Companions</option><option value="00022.html">Chapter 20- Soul Weapon</option><option value="00023.html">Chapter 21- Getting A Guild Card</option><option value="00024.html">Chapter 22- Keeno Okami The Snowfire Princess</option><option value="00025.html">Chapter 23- Magic</option><option value="00026.html">Chapter 24- Solar Convergence 2-Fluffy Boogaloo</option><option value="00027.html">Chapter 25- Intentions</option><option value="00028.html">Chapter 26- Going To See Pram</option><option value="00029.html">Chapter 27- 16 Years Old And Resolve For The Future Journey</option><option value="00030.html">Chapter 28- Purification</option><option value="00031.html">Chapter 29- Fia’S Final Test</option><option value="00032.html">Chapter 30- While The Fox Is Away, The Phoenix And Leopard Will Talk</option><option value="00033.html">Chapter 31- Amaterasu’S Proposition</option><option value="00034.html">Chapter 32- Fia’S Goodbye</option><option value="00035.html">Chapter 33- Preparations Before The Start Of The Journey</option><option value="00036.html">Chapter 34- Pram’S Training And An Interruption</option><option value="00037.html">Side Chapter 2- Delusions</option><option value="00038.html">Chapter 35- And So It Begins</option><option value="00039.html">Chapter 36- Short-Term Goals</option><option value="00040.html">Chapter 37- A Small Teachable Moment</option><option value="00041.html">Chapter 38- Reaching The City</option><option value="00042.html">Chapter 39- Waiting Out The Storm</option><option value="00043.html">Chapter 40- Amaterasu’S Anxiety</option><option value="00044.html">Chapter 41- On The Road Again</option><option value="00045.html">Chapter 42- Fluff With Some Spice</option><option value="00046.html">Chapter 43- The Evening After</option><option value="00047.html">Chapter 44- The Search For The Well Begins</option><option value="00048.html">Chapter 45- Curse Dispelling</option><option value="00049.html">Chapter 46- Gaining Knowledge</option><option value="00050.html">Chapter 47- Trial Of Knowledge</option><option value="00051.html">Chapter 48- Leaving The Well</option><option value="00052.html">Chapter 49- Mountain Pass Traversal</option><option value="00053.html">Chapter 50- Stepping Foot In Odeen</option><option value="00054.html">Side Chapter 3- Aside In The Capital Of Odeen</option><option value="00055.html">Chapter 51- Odeen Is Not Off To A Good Start</option><option value="00056.html">Chapter 52- Finally, Some Bandits</option><option value="00057.html">Chapter 53- Fluff On A Boat</option><option value="00058.html">Chapter 54- More Fluff</option><option value="00059.html">Chapter 55- Small Confrontation And A Fun Conversation</option><option value="00060.html">Chapter 56- Arrival In Vanir</option><option value="00061.html">Chapter 57- Freya</option><option value="00062.html">Chapter 58- Questions</option><option value="00063.html">Chapter 59- Deciding What Needs To Be Done</option><option value="00064.html">Chapter 60- To The Guild</option><option value="00065.html">Chapter 61- Time For Work</option><option value="00066.html">Chapter 62- Clothes Shopping</option><option value="00067.html">Chapter 63- An Unexpected Meeting</option><option value="00068.html">Chapter 64- Red’S Story</option><option value="00069.html">Chapter 65- Planning</option><option value="00070.html">Chapter 66- Dead Zone Plan</option><option value="00071.html">Chapter 67- Dead Zone</option><option value="00072.html">Chapter 68- Leaving Vanir’S Capital</option><option value="00073.html">Chapter 69- Divine Visitors</option><option value="00074.html">Chapter 70- Escaping The Rain For Some Fluff</option><option value="00075.html">Chapter 71- Foxes, The Teasening</option><option value="00076.html">Side Chapter 4- Side: Falheim-Rebels</option><option value="00077.html">Chapter 72- Time For Some Red</option><option value="00078.html">Chapter 73- Random Encounter On The Road</option><option value="00079.html">Chapter 74- Tasty Treats And Magical Explosions</option><option value="00080.html">Chapter 75- Red’S Adoption</option><option value="00081.html">Chapter 76- Competitive Impulses</option><option value="00082.html">Chapter 77- Prelude To A Big Event</option><option value="00083.html">Chapter 78- Horde Preparation</option><option value="00084.html">Chapter 79- Start Of The Defense</option><option value="00085.html">Chapter 80- End Of The Defense</option><option value="00086.html">Chapter 81- Pram: Teaser Extraordinaire</option><option value="00087.html">Chapter 82- Freya Things With A Side Of Fluff</option><option value="00088.html">Chapter 83- Keeno’S Side</option><option value="00089.html">Chapter 84- Keeno Meets The Twins</option><option value="00090.html">Chapter 85- New Titles</option><option value="00091.html">Chapter 86- Birding Around</option><option value="00092.html">Chapter 87- Travel Montage Time!</option><option value="00093.html">Chapter 88- Fort Battle</option><option value="00094.html">Chapter 89- Reunion</option><option value="00095.html">Chapter 90- A Lady And Her Retainers</option><option value="00096.html">Chapter 91- Pram And Freya- Learning From Emma</option><option value="00097.html">Chapter 92- Amaterasu’S Worries</option><option value="00098.html">Chapter 93- Red’S A Genius</option><option value="00099.html">Chapter 94- Meeting The Rebel Commander</option><option value="00100.html">Chapter 95- A Lesson In Divinity</option><option value="00101.html">Chapter 96- Taboo</option><option value="00102.html">Chapter 97- Talks With A Dragon</option><option value="00103.html">Chapter 98- Talking With Ama And Negotiations</option><option value="00104.html">Special Fluff Chapter</option><option value="00105.html">Chapter 99- Setting Out</option><option value="00106.html">Chapter 100- Beginner Necromancy</option><option value="00107.html">Chapter 101- Siege Of The Mountain</option><option value="00108.html">Chapter 102- Aftermath Of The Siege</option><option value="00109.html">Chapter 103- Proposition To Ortlinde</option><option value="00110.html">Chapter 104- Introducing Ortlinde To The Others.</option><option value="00111.html">Chapter 105- Talking With Fafnir And An Omen</option><option value="00112.html">Chapter 106- The Beginning Of The Fall Of Falheim</option><option value="00113.html">Chapter 107- The Beast Emerges</option><option value="00114.html">Chapter 108- Two Battles, One Conclusion</option><option value="00115.html">Chapter 109- Convincing Freyr</option><option value="00116.html">Chapter 110- Angry Fox Commits Regicide</option><option value="00117.html" selected>Chapter 111- Getting To Falheim’S Dead Zone</option><option value="00118.html">Chapter 112- Dead Zone Two: Gone, Tail Three: Obtained</option><option value="00119.html">Special Christmas Chapter</option><option value="00120.html">Chapter 113- Arise Dragon, Dragon Arise</option><option value="00121.html">Chapter 114- Some Bonding With Fafnir</option><option value="00122.html">Chapter 115- Long Awaited Date</option><option value="00123.html">Chapter 116- Chatting With Emma And Fafnir</option><option value="00124.html">Side Chapter 5- Red And Ortilinde</option><option value="00125.html">Chapter 117- Time To Save Falheim</option><option value="00126.html">Chapter 118- Falheim Makes Keeno Mad…Again</option><option value="00127.html">Chapter 119- The Family Grows</option><option value="00128.html">Chapter 120- Core Awakening</option><option value="00129.html">Chapter 121- Time To Leave Falheim</option><option value="00130.html">Chapter 122- First Day Of Flight And Pram’S Plight</option><option value="00131.html">Chapter 123- A Relaxing Morning</option><option value="00132.html">Chapter 124- Day Of Parting Hath Come</option><option value="00133.html">Side Chapter 6- Something Nothing Can Escape</option><option value="00134.html">Chapter 125- Broke Once More!</option><option value="00135.html">Chapter 126- Angry Wolf, Angry Fox</option><option value="00136.html">Chapter 127- Finishing Up With The Bandits</option><option value="00137.html">Chapter 128- Exploring The Ruins</option><option value="00138.html">Chapter 129- Creation Myth: As Interpreted By Keeno</option><option value="00139.html">Chapter 130- Realization</option><option value="00140.html">Chapter 131- Back On The Road</option><option value="00141.html">Chapter 132- Negotiations?</option><option value="00142.html">Chapter 133- The Return Of Amaterasu</option><option value="00143.html">Chapter 134- Relaxing In The City</option><option value="00144.html">Chapter 135- A Dance To Remember</option><option value="00145.html">Chapter 136- Well, That Happened</option><option value="00146.html">Chapter 137- 20Th Birthday</option><option value="00147.html">Chapter 138- Reconciliation</option><option value="00148.html">Chapter 139- Decisions Decisions</option><option value="00149.html">Chapter 140- Capital City, Or Small Country?</option><option value="00150.html">Chapter 141- The Meeting</option><option value="00151.html">Special Collab Chapter</option><option value="00152.html">Chapter 142- Recognition</option><option value="00153.html">Chapter 143- A Break For Some Research</option><option value="00154.html">Chapter 144- Eblana The Go Getter</option><option value="00155.html">Chapter 145- A Reunion And Planning</option><option value="00156.html">Chapter 146- Getting The Plan Underway</option><option value="00157.html">Chapter 147- Meet And Run</option><option value="00158.html">Chapter 148- Spice And Fox</option><option value="00159.html">Chapter 149- Four Fluffs, More Powa!!!</option><option value="00160.html">Chapter 150- Dragons Reunited</option><option value="00161.html">Chapter 151- Dragon Rests For The Long Winter</option><option value="00162.html">Chapter 152- The Fox Receives A Warning</option><option value="00163.html">Chapter 153- Getting One Obstacle Out Of The Way</option><option value="00164.html">Chapter 154- A Special Kind Of Dance</option><option value="00165.html">Chapter 155- Moar Fluff!!!</option><option value="00166.html">Side Chapter 7- Meeting Of Dragons</option><option value="00167.html">Chapter 156- Solemnity</option><option value="00168.html">Chapter 157- The Dragon Appears</option><option value="00169.html">Chapter 158- Talking With A Future Valkyrie</option><option value="00170.html">Chapter 159- Valkyrie Training</option><option value="00171.html">Chapter 160- A Long Journey’S Intermission</option><option value="00172.html">Chapter 161- Sparring</option><option value="00173.html">Chapter 162- Another Myth Experienced</option><option value="00174.html">Chapter 163- Anti-Distraction Training</option><option value="00175.html">Chapter 164- Arrival In Lokir</option><option value="00176.html">Chapter 165- A Rare Sight</option><option value="00177.html">Chapter 166- Creatures Of The Ash Desert</option><option value="00178.html">Chapter 167- Flame Eternal No Longer</option><option value="00179.html">Chapter 168- Planning For Firefighting</option><option value="00180.html">Chapter 169- Getting To Know Geri And Freki</option><option value="00181.html">Chapter 170- Not Even A Day And Something Happens</option><option value="00182.html">Chapter 171- A Painful Time In The Desert</option><option value="00183.html">Chapter 172- Wings!</option><option value="00184.html">Chapter 173- A Meeting</option><option value="00185.html">Chapter 174- An Unexpected Development</option><option value="00186.html">Chapter 175- Steam And Fox</option><option value="00187.html">Chapter 176- A Mystery</option><option value="00188.html">Chapter 177- Entering Capital Lokir</option><option value="00189.html">Chapter 178- Getting A Grasp Of Lokir</option><option value="00190.html">Chapter 179- A Second Meeting</option><option value="00191.html">Chapter 180- The Den Of Wolves</option><option value="00192.html">Chapter 181- The First Of Many</option><option value="00193.html">Chapter 182- Angry Isn’T Enough To Describe</option><option value="00194.html">Chapter 183- The First Strike</option><option value="00195.html">Chapter 184- The Invitation</option><option value="00196.html">Chapter 185- Meeting With Sif And Future Discussion</option><option value="00197.html">Chapter 186- Witchling</option><option value="00198.html">Chapter 187- A Date To Soothe The Soul</option><option value="00199.html">Chapter 188- The Beginnings Of Phase Two</option><option value="00200.html">Chapter 189- Mostima Joins The Purge</option><option value="00201.html">Chapter 190- Advent Of A Goddess</option><option value="00202.html">Chapter 191- Waking Up Again</option><option value="00203.html">Chapter 192- Time To Return Home</option><option value="00204.html">Chapter 193- Return Home</option><option value="00205.html">Chapter 194- Freya Meets The Family</option><option value="00206.html">Chapter 195- Meeting In The Night</option></select>
+        <a class="btn next-button"  href="00118.html">Next</a>
+    </div>
+    
+            </div>
+            <div id="readpos">0%</div>
+        </body>
+    </html>
+    
