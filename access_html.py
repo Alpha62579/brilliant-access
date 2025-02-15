@@ -145,6 +145,10 @@ def login(username, password):
 </html>"""
         )
         f.close()
+        res = r.get(
+            BASE_URL + "logout",
+            headers=HEADERS,
+        )
         print("Process complete with", count, "codes found.")
         exit(0)
 
