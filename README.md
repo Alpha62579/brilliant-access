@@ -1,5 +1,9 @@
 # Brilliant Proctored Exam Access Code Finder
 
+> [!WARNING]
+> Currently locked out, no accounts to run workflow with
+> Website will no run until an account is obtained/another method is found
+
 ```
 Dear Brilliant,
   I must express my profound gratitude for the sheer brilliance
@@ -36,4 +40,4 @@ Sincerely,
 A Computer Science student.
 ```
 ## Takedown
-Open an issue.
+sigh you win.
