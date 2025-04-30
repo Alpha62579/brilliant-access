@@ -1,8 +1,7 @@
 # Brilliant Proctored Exam Access Code Finder
 
 > [!WARNING]
-> Currently locked out, no accounts to run workflow with
-> Website will no run until an account is obtained/another method is found
+> Due to the usage of 5-digit codes, the current script would take quite a few hours to run (yikes!), hence this is the end.
 
 ```
 Dear Brilliant,
