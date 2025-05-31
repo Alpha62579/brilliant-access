@@ -1,8 +1,5 @@
 # Brilliant Proctored Exam Access Code Finder
 
-> [!WARNING]
-> Due to the usage of 5-digit codes, the current script would take quite a few hours to run (yikes!), hence this is the end.
-
 ```
 Dear Brilliant,
   I must express my profound gratitude for the sheer brilliance
@@ -39,4 +36,4 @@ Sincerely,
 A Computer Science student.
 ```
 ## Takedown
-sigh you win.
+~~sigh you win.~~ NOT TODAY FOLKS!
