@@ -1,5 +1,8 @@
 # Brilliant Proctored Exam Access Code Finder
 
+> [!WARNING]
+> Since I no longer study at Brilliant (and thus possess no way to maintain this going forward) nor do I have the time to maintain this to begin with, I'm archiving this. Feel free to fork this and maintain this yourself.
+
 ```
 Dear Brilliant,
   I must express my profound gratitude for the sheer brilliance
@@ -36,4 +39,4 @@ Sincerely,
 A Computer Science student.
 ```
 ## Takedown
-~~sigh you win.~~ NOT TODAY FOLKS!
+idk, im leaving this here
